@@ -1,0 +1,163 @@
+
+html, body {
+    height: 100%;
+}
+
+#wrap {
+    /*height: 1500px;*/
+}
+
+#main {
+    margin-bottom: 80px;
+    /*overflow:auto;*/
+    /*padding-bottom: 50px;  this needs to be bigger than footer height*/
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.container-fluid {
+    padding-left: 0px !important
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+    height: 450px
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    padding: 0px !important;
+    background-color: transparent;
+    height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+.footer {
+    background-color: #111;
+    color: #eee;
+    height: 50px;
+    padding-top: 20px;
+    bottom: 0;
+    position: fixed !important;
+    width: 100% !important;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 0px !important;
+    }
+
+    .row.content {
+        height: auto;
+    }
+}
+
+/* Custom primefaces component */
+.noborder {
+    border: none !important
+}
+
+.nobackground {
+    background: none !important
+}
+
+.ui-datatable th {
+    background-color: #eee;
+}
+
+.ui-paginator.ui-paginator-bottom {
+    background-color: #eee;
+}
+
+.max-witdh {
+    width: 100% !important;
+}
+
+.max-height {
+    height: 100%;
+}
+
+.login {
+    display: inline-block;
+}
+
+.ui-inputfield {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.blue-text {
+    color: #337ab7;
+}
+
+.green-text {
+    color: #5cb85c;
+}
+
+.sky-text {
+    color: #5bc0de;
+}
+
+.orange-text {
+    color: #f0ad4e;
+}
+
+.red-text {
+    color: #d9534f;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.huge {
+    font-size: 3em;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green > .panel-heading {
+    border-color: #5cb85c;
+    color: white;
+    background-color: #5cb85c;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red > .panel-heading {
+    border-color: #d9534f;
+    color: white;
+    background-color: #d9534f;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow > .panel-heading {
+    border-color: #f0ad4e;
+    color: white;
+    background-color: #f0ad4e;
+}
+
+#viz {
+    width: 100%;
+    height: 700px;
+    border: 1px solid lightgray;
+    font: 22pt arial;
+}

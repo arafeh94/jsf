@@ -1,0 +1,4 @@
+2019-10-15 17:20:15 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 235323455 }
+2019-10-15 17:20:15 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 454423746 }
+2019-10-15 17:22:47 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 235323455 }
+2019-10-15 17:22:47 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 454423746 }

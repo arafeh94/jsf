@@ -1,0 +1,11 @@
+2019-10-02 03:22:46 - null
+2019-10-02 04:16:12 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 73119923 }
+2019-10-02 04:16:12 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 226310002 }
+2019-10-02 04:16:12 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 17562745 }
+2019-10-02 04:16:12 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 3945480556 }
+2019-10-02 04:16:12 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 1000206233868095488 }
+2019-10-02 13:57:51 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 73119923 }
+2019-10-02 13:57:51 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 226310002 }
+2019-10-02 13:57:51 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 17562745 }
+2019-10-02 13:57:51 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 3945480556 }
+2019-10-02 13:57:51 - E11000 duplicate key error collection: socins.nodes index: _id_ dup key: { : 1000206233868095488 }

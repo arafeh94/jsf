@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/layouts/main.xhtml">
+    <f:metadata>
+        <f:viewParam name="projectId" value="#{projectView.projectId}"/>
+        <f:viewAction action="#{projectView.onLoad}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        SocIns
+    </ui:define>
+
+    <ui:define name="description">
+        Project Viewer
+    </ui:define>
+
+    <ui:define name="content">
+        <h3 style="margin-top:0">#{projectView.project.name}</h3>
+        <ui:repeat var="table" value="#{projectView.analysis}" varStatus="status">
+            <h3 style="margin-top: 10px;">#{table.title}</h3>
+
+            <p:dataTable var="row" value="#{table.rows}">
+                <p:columns value="#{projectView.columnsOf(status.index,row)}" var="column" columnIndexVar="colIndex">
+                    <f:facet name="header">
+                        <h:outputText value="#{column.property}"/>
+                    </f:facet>
+                    <h:outputText value="#{column.property}"/>
+                </p:columns>
+            </p:dataTable>
+
+        </ui:repeat>
+    </ui:define>
+
+</ui:composition>
+</html>
+

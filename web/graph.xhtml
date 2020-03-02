@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<!--suppress CheckTagEmptyBody -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="WEB-INF/layouts/main.xhtml">
+    <f:metadata>
+        <f:viewParam name="projectId" value="#{projectGraphView.projectId}"/>
+        <f:viewAction action="#{projectGraphView.onLoad}"/>
+    </f:metadata>
+    <ui:define name="head">
+        <script src="https://cdn.neo4jlabs.com/neovis.js/v1.0.0/neovis.js"/>
+    </ui:define>
+    <ui:define name="title">
+        SocIns
+    </ui:define>
+
+    <ui:define name="description">
+        Project Graph Viewer
+    </ui:define>
+    <ui:define name="content">
+        <div id="viz" style="height: 465px;width: 100%"></div>
+        <script type="text/javascript">
+            var viz;
+            window.addEventListener('load', function (ev) {
+                draw();
+            });
+
+            function draw() {
+                var config = {
+                    container_id: "viz",
+                    server_url: "bolt://localhost:7687",
+                    server_user: "neo4j",
+                    server_password: "admin",
+                    labels: {
+                        "GraphNode": {
+                            "caption": false,
+                            "size": 20.4,
+                            "icon": "???"
+                        }
+                    },
+                    relationships: {
+                        "linked": {
+                            "thickness": "5",
+                            "caption": false
+                        }
+                    },
+                    initial_cypher: "MATCH (n)-[r:linked]->(m) RETURN *"
+                };
+                viz = new NeoVis.default(config);
+                viz.render();
+            }
+        </script>
+    </ui:define>
+
+</ui:composition>
+</html>
+

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <h:outputStylesheet library="webjars" name="font-awesome/5.0.2/web-fonts-with-css/css/fontawesome.css"/>
+    <h:outputStylesheet library="webjars" name="bootstrap/3.3.7-1/css/bootstrap.min-jsf.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet"></link>
+    <h:outputStylesheet library="css" name="main.css"/>
+    <h:outputStylesheet library="css" name="forms.css"/>
+    <script src="https://cdn.rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+    <ui:insert name="head"/>
+    <title>SocIns</title>
+</h:head>
+
+<h:body>
+
+    <div id="wrap">
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ui:insert name="header">
+                    <ui:include src="/includes/header.xhtml"/>
+                </ui:insert>
+            </div>
+        </nav>
+
+        <div class="container-fluid text-left" id="main">
+            <div class="col-sm-2 sidenav">
+                <ui:insert name="menu">
+                    <ui:include src="/includes/menu.xhtml"/>
+                </ui:insert>
+            </div>
+            <div class="col-sm-10">
+
+                <div class="col-sm-12" style="padding-top: 20px;padding-bottom: 20px">
+                    <span style="font-size: 1.3em">
+                        <ui:insert name="title"/>
+                    </span>
+                    <span style="color: grey">
+                        <ui:insert name="description"/>
+                    </span>
+                </div>
+
+                <div class="col-sm-12">
+                    <h:form id="msgForm">
+                        <p:messages id="message" showDetail="true" closable="true">
+                            <p:autoUpdate/>
+                            <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 10000)"/>
+                        </p:messages>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-12">
+                    <ui:insert name="content">
+                        Application Content
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center footer">
+        <ui:insert name="footer">
+            <ui:include src="/includes/footer.xhtml"/>
+        </ui:insert>
+    </div>
+
+</h:body>
+</html>
+

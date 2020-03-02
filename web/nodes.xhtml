@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="WEB-INF/layouts/main.xhtml">
+    <f:metadata>
+        <!--<f:viewParam name="projectId" value="#{projectGraphView.projectId}"/>-->
+        <!--<f:viewAction action="#{projectGraphView.onLoad}"/>-->
+    </f:metadata>
+    <ui:define name="title">
+        SocIns
+    </ui:define>
+
+    <ui:define name="description">
+        Mined Nodes
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel>Accounts</p:outputLabel>
+        <p:dataTable var="item"
+                     paginator="true"
+                     rowsPerPageTemplate="5,10,15"
+                     rows="10"
+                     style="margin-bottom:20px"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     value="#{nodesView.accountNodes}"
+                     id="accounts">
+            <p:column headerText="ID">
+                <h:outputText value="#{item.id}"/>
+            </p:column>
+            <p:column headerText="Account">
+                <h:outputText value="#{item.get('AccountName','')}"/>
+            </p:column>
+            <p:column headerText="Created At">
+                <h:outputText value="#{item.createdAt}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Node Expire Date">
+                <h:outputText value="Unlimited"/>
+            </p:column>
+        </p:dataTable>
+
+        <p:outputLabel>Posts</p:outputLabel>
+        <p:dataTable var="item"
+                     paginator="true"
+                     rowsPerPageTemplate="5,10,15"
+                     rows="10"
+                     style="margin-bottom:20px"
+                     resizableColumns="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     value="#{nodesView.postNodes}"
+                     id="posts">
+            <p:column headerText="ID">
+                <h:outputText value="#{item.id}"/>
+            </p:column>
+            <p:column headerText="Lang" style="width:10px;">
+                <h:outputText value="#{item.get('Lang','')}"/>
+            </p:column>
+            <p:column headerText="HashTag">
+                <h:outputText value="#{item.get('HashTag','')}"/>
+            </p:column>
+            <p:column headerText="Text" style="width:300px;">
+                <h:outputText value="#{item.get('Text','')}"/>
+            </p:column>
+            <p:column headerText="Favorite">
+                <h:outputText value="#{item.get('FavoriteCount','')}"/>
+            </p:column>
+            <p:column headerText="Retweets">
+                <h:outputText value="#{item.get('RetweetCount','')}"/>
+            </p:column>
+            <p:column headerText="Node Expire Date">
+                <h:outputText value="Unlimited"/>
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>
+</html>
+

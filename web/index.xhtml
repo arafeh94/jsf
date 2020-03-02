@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/layouts/main.xhtml">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{indexView.onLoad}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        SocIns
+    </ui:define>
+
+    <ui:define name="description">
+        Home Page
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:dataTable var="item" value="#{indexView.projects}" id="dataTable">
+                <p:column headerText="Name">
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+                <p:column headerText="State">
+                    <h:outputText value="#{item.state}"/>
+                </p:column>
+                <p:column headerText="">
+                    <p:link outcome="project" value="View">
+                        <f:param name="projectId" value="#{item.id}"/>
+                    </p:link>
+                    <p:spacer width="8px"/>
+                    <p:link outcome="graph" value="Visualise">
+                        <f:param name="projectId" value="#{item.id}"/>
+                    </p:link>
+                    <p:spacer width="8px"/>
+                    <p:link outcome="crud" value="Edit">
+                        <f:param name="projectId" value="#{item.id}"/>
+                    </p:link>
+                    <p:spacer width="8px"/>
+                    <p:commandLink
+                            update=":form:dataTable"
+                            action="#{indexView.delete(item.id)}"
+                            value="Delete"/>
+                    <p:spacer width="8px"/>
+                    <p:commandLink
+                            update=":form:dataTable"
+                            action="#{indexView.stop(item.id)}"
+                            value="Stop"/>
+                    <p:spacer width="8px"/>
+                    <p:commandLink
+                            update=":form:dataTable"
+                            action="#{indexView.run(item.id)}"
+                            value="Run"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:linkButton outcome="crud"
+                      value="Create Project"
+                      style="margin-top: 8px"/>
+
+    </ui:define>
+</ui:composition>
+</html>
+

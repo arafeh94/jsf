@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <property resource="conf/log.properties"/>
+    <property file="${user.dir}\Documents\socins\conf\log.properties"/>
+
+    <property name="DEV_HOME" value="${log.path}"/>
+    <property name="APP_NAME" value="${log.appname}"/>
+
+
+    <!-- STDOUT log pattern -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %-5level %logger{36} - %msg%n
+                <!--%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n-->
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- FILE-AUDIT log pattern and rollover -->
+    <appender name="FILE-AUDIT"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${DEV_HOME}/${APP_NAME}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>
+                ${DEV_HOME}/archived/${APP_NAME}.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- rollover every 10MB -->
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${log.file_size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+    <!-- FILE-ERROR log pattern and rollover -->
+    <appender name="FILE-ERROR"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${DEV_HOME}/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${DEV_HOME}/archived/error.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${log.file_size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Send logs to both console and file audit -->
+    <logger name="com.arafeh" level="${log.level}" additivity="false">
+        <appender-ref ref="FILE-AUDIT"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <if condition='${log.stdout}'>
+            <then>
+                <appender-ref ref="STDOUT"/>
+            </then>
+        </if>
+    </logger>
+
+    <!-- LIMIT MONGO VERBOSE LOG -->
+    <logger name="org.mongodb.driver.cluster" level="WARN"/>
+    <logger name="org.neo4j.ogm.drivers.bolt.request.BoltRequest" level="WARN"/>
+
+    <!-- LIMIT MONGO VERBOSE LOG -->
+    <logger name="twitter4j" level="WARN"/>
+
+
+</configuration>

@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="WEB-INF/layouts/main.xhtml">
+    <f:metadata>
+        <f:viewParam name="projectId" value="#{createProjectView.projectId}"/>
+        <f:viewAction action="#{createProjectView.onLoad}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        SocIns
+    </ui:define>
+
+    <ui:define name="description">
+        Create Project
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="msgs"/>
+        <h:form id="main-form">
+            <div class="form-input">
+                <p:outputLabel for="name" value="Project Name"/>
+                <p:spacer width="8px"/>
+                <p:inputText id="name" value="#{createProjectView.name}" label="name">
+                    <f:validateLength minimum="3"/>
+                </p:inputText>
+
+                <p:spacer width="12px"/>
+
+                <p:outputLabel for="draftSelect" value="Select A Strategy"/>
+                <p:spacer width="8px"/>
+                <p:selectOneMenu
+                        id="draftSelect"
+                        converter="#{projectConverter}"
+                        value="#{createProjectView.draft}">
+                    <p:ajax update="@form"/>
+                    <f:selectItem itemLabel="Select Strategy" itemValue=""/>
+                    <f:selectItems value="#{createProjectView.drafts}"
+                                   var="draft" itemLabel="#{draft.name}"
+                                   itemValue="#{draft}"/>
+                </p:selectOneMenu>
+            </div>
+
+            <div class="form-input" id="projectForm">
+                <p:panel id="staticDataSources" style="margin-top: 4px">
+                    <div style="margin: 4px">
+                        <p:outputLabel for="dataSourceInfoId" value="Data Source Provider: "/>
+                        <p:spacer width="8px"/>
+                        <p:selectOneButton
+                                id="dataSourceInfoId"
+                                value="#{createProjectView.dataSource.source}">
+                            <!--<p:ajax update="sourceFilters"/>-->
+                            <f:selectItems value="#{createProjectView.availableDataSources}"/>
+                        </p:selectOneButton>
+
+                        <p:panel id="inputSettings">
+                            <p:commandButton value="Add Settings"
+                                             update="inputSettingsId"
+                                             action="${createProjectView.addInputSettings()}"
+                                             style="margin-top: 4px;margin-bottom: 4px"/>
+                            <p:commandButton value="Help" icon="fa fa-fw fa-question-circle"
+                                             type="button"
+                                             onclick="PF('navigatorSettingsDialog').show();"/>
+                            <p:panel id="inputSettingsId" style="margin-top: 4px">
+                                <ui:repeat value="#{createProjectView.getInputSettings()}" var="settings">
+                                    <h:panelGroup layout="block" style="margin-top: 4px">
+                                        <p:selectOneMenu filter="true"
+                                                         value="#{settings.field}"
+                                                         style="margin-left: 8px;width: 30%;">
+                                            <f:selectItem itemLabel="Select One" itemValue=""/>
+                                            <f:selectItems value="#{createProjectView.availableInputSettings}"/>
+                                        </p:selectOneMenu>
+                                        <p:inputText value="#{settings.value}"
+                                                     style="margin-left: 4px;width: 30%"
+                                                     placeholder="settings value"/>
+                                    </h:panelGroup>
+                                </ui:repeat>
+                            </p:panel>
+                        </p:panel>
+
+                        <p:spacer width="2px"/>
+
+                        <p:panel id="sourceFilters">
+                            <p:outputLabel for="startingIds" value="Seed Nodes"/>
+                            <p:spacer width="8px"/>
+                            <p:inputText
+                                    id="startingIds"
+                                    style="width: 65%"
+                                    value="#{createProjectView.dataSource.startingIds}"
+                                    label="startingIds"/>
+                            <p:spacer width="8px"/>
+                            <p:commandButton value="Help" icon="fa fa-fw fa-question-circle"
+                                             type="button"
+                                             onclick="PF('startingIdsDialog').show();"/>
+                            <br/>
+                            <p:commandButton value="Add Filter"
+                                             update="filtersId"
+                                             action="${createProjectView.addFilter()}"
+                                             style="margin-top: 4px;margin-bottom: 4px"/>
+                            <p:commandButton value="Help" icon="fa fa-fw fa-question-circle"
+                                             type="button"
+                                             onclick="PF('filterDialog').show();"/>
+                            <p:panel id="filtersId" style="margin-top: 4px">
+                                <ui:repeat value="#{createProjectView.getFilters()}" var="filter">
+                                    <h:panelGroup layout="block" style="margin-top: 4px">
+                                        <p:selectOneMenu filter="true"
+                                                         value="#{filter.field}"
+                                                         style="margin-left: 8px;width: 30%;">
+                                            <f:selectItem itemLabel="Select One" itemValue=""/>
+                                            <f:selectItems value="#{createProjectView.availableFilters}"/>
+                                        </p:selectOneMenu>
+                                        <p:inputText value="#{filter.value}"
+                                                     style="margin-left: 4px;width: 30%"
+                                                     placeholder="filter value"/>
+                                        <p:inputText value="#{filter.levels}"
+                                                     style="margin-left: 4px;width: 30%"
+                                                     placeholder="at levels seperated by ';'"/>
+                                    </h:panelGroup>
+                                </ui:repeat>
+                            </p:panel>
+                        </p:panel>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="form-input">
+                <p:panel id="dataNavigator" style="margin-top: 4px">
+                    <p:outputLabel for="navigator" value="Select Navigation Strategy: "/>
+                    <p:spacer width="8px"/>
+                    <p:selectOneButton id="navigator" value="#{createProjectView.navigatorStrategy}">
+                        <f:selectItems value="#{createProjectView.availableNavigators}"/>
+                    </p:selectOneButton>
+                    <p:panel id="navigatorSettings">
+                        <p:commandButton value="Add Settings"
+                                         update="navigatorSettingsId"
+                                         action="${createProjectView.addNavigatorSettings()}"
+                                         style="margin-top: 4px;margin-bottom: 4px"/>
+                        <p:commandButton value="Help" icon="fa fa-fw fa-question-circle"
+                                         type="button"
+                                         onclick="PF('navigatorSettingsDialog').show();"/>
+                        <p:panel id="navigatorSettingsId" style="margin-top: 4px">
+                            <ui:repeat value="#{createProjectView.getNavigatorSettings()}" var="settings">
+                                <h:panelGroup layout="block" style="margin-top: 4px">
+                                    <p:selectOneMenu filter="true"
+                                                     value="#{settings.field}"
+                                                     style="margin-left: 8px;width: 30%;">
+                                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                                        <f:selectItems value="#{createProjectView.availableNavigatorSettings}"/>
+                                    </p:selectOneMenu>
+                                    <p:inputText value="#{settings.value}"
+                                                 style="margin-left: 4px;width: 30%"
+                                                 placeholder="settings value"/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </p:panel>
+                    </p:panel>
+
+                </p:panel>
+            </div>
+            <div class="form-input">
+                <p:panel id="dataAnalysis" style="margin-top: 4px">
+                    <p:outputLabel value="Select Data Analysis Strategies: "/>
+                    <p:selectManyButton
+                            value="#{createProjectView.dataAnalysisStrategies}"
+                            style="margin-left: 8px">
+                        <f:selectItems value="#{createProjectView.availableDataAnalysisStrategy}"/>
+                    </p:selectManyButton>
+
+
+                    <p:panel id="analysisSettings">
+                        <p:commandButton value="Add Settings"
+                                         update="analysisSettingsId"
+                                         action="${createProjectView.addAnalysisSettings()}"
+                                         style="margin-top: 4px;margin-bottom: 4px"/>
+                        <p:commandButton value="Help" icon="fa fa-fw fa-question-circle"
+                                         type="button"
+                                         onclick="PF('analysisSettingsDialog').show();"/>
+                        <p:panel id="analysisSettingsId" style="margin-top: 4px">
+                            <ui:repeat value="#{createProjectView.getAnalysisSettings()}" var="settings">
+                                <h:panelGroup layout="block" style="margin-top: 4px">
+                                    <p:selectOneMenu filter="true"
+                                                     value="#{settings.field}"
+                                                     style="margin-left: 8px;width: 30%;">
+                                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                                        <f:selectItems value="#{createProjectView.availableAnalysisSettings}"/>
+                                    </p:selectOneMenu>
+                                    <p:inputText value="#{settings.value}"
+                                                 style="margin-left: 4px;width: 30%"
+                                                 placeholder="settings value"/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </p:panel>
+                    </p:panel>
+
+                </p:panel>
+
+            </div>
+            <p:commandButton type="submit" value="Submit" icon="ui-icon-disk"
+                             action="#{createProjectView.submit}"/>
+            <p:commandButton type="submit" value="Submit And Run" icon="ui-icon-disk"
+                             action="#{createProjectView.submitAndRun}"/>
+            <p:commandButton type="submit" value="Save As Draft" icon="ui-icon-pin-w"
+                             action="#{createProjectView.saveAsDraft}"/>
+        </h:form>
+        <p:dialog header="Filters" widgetVar="filterDialog" width="400" height="450">
+            <h:outputText value="#{createProjectView.filtersDescription}" escape="false"/>
+        </p:dialog>
+        <p:dialog header="Data Sources" widgetVar="dataSourceDialog">
+            <h:outputText value="Resistance to PrimeFaces is futile!"/>
+        </p:dialog>
+        <p:dialog header="Starting Ids" widgetVar="startingIdsDialog">
+            <h:outputText value="Resistance to PrimeFaces is futile!"/>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+</html>
+
